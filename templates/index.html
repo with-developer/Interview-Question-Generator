@@ -14,9 +14,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/css/bootstrap.min.css"
     integrity="sha512-NZ19NrT58XPK5sXqXnnvtf9T5kLXSzGQlVZL9taZWeTBtXoN3xIfTdxbkQh6QSoJfJgpojRqMfhyqBAAEeiXcA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/js/bootstrap.min.js"
-    integrity="sha512-Pv/SmxhkTB6tWGQWDa6gHgJpfBdIpyUy59QkbshS1948GRmj6WgZz18PaDMOqaEyKLRAvgil7sx/WACNGE4Txw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black Han Sans&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbit&display=swap">
 
@@ -181,7 +181,7 @@ AI기반 면접 질문 생성 서비스
             
             <button type="submit" class="btn btn-primary">질문 생성</button>
           </form>
-            <div id="questions" class="mt-4 accordion" id="questionsAccordion"></div>
+          <div id="questions" class="mt-4 accordion"></div>
           </main>
 
           
@@ -203,11 +203,7 @@ AI기반 면접 질문 생성 서비스
   
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
-    integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="{{ url_for('static', filename='assets/js/vendor/popper.min.js') }}"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 
 
 <script>
@@ -251,26 +247,26 @@ AI기반 면접 질문 생성 서비스
     $.post('/generate_questions', dataToSend, function (data) {
       // "생성된 질문" 제목 추가
       let questionsHtml = '<h3>생성된 질문</h3>';
-      
-      data.questions.forEach(function(q, index) {
-        questionsHtml += `
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="heading${index}">
-              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse${index}">
-                ${index + 1}. ${q.question}  <!-- 질문 앞에 번호 추가 -->
-              </button>
-            </h2>
-            <div id="collapse${index}" class="accordion-collapse collapse" data-bs-parent="#questionsAccordion">
-              <div class="card-body" style="text-align: initial;">
-                <p>${q.tip}</p>
-              </div>
+    
+    data.questions.forEach(function(q, index) {
+      questionsHtml += `
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading${index}">
+            <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse${index}">
+              ${index + 1}. ${q.question}
+            </button>
+          </h2>
+          <div id="collapse${index}" class="accordion-collapse collapse"> <!-- data-bs-parent 속성 제거 -->
+            <div class="card-body" style="text-align: initial;">
+              <p>${q.tip}</p>
             </div>
           </div>
-        `;
-      });
-      $('#questions').html(questionsHtml);
+        </div>
+      `;
     });
+    $('#questions').html(questionsHtml);
   });
+});
 
   $(document).ready(function () {
     // 초기 상태 설정 (자기소개서 입력칸이 기본으로 보이도록)
