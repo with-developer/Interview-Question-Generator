@@ -17,15 +17,28 @@ openai.api_key = API_KEY
 def index():
     return render_template('index.html')
 
-@limiter.limit("1 per minute")  # 분당 1회 요청으로 제한
+
 @app.route('/generate_questions', methods=['POST'])
+@limiter.limit("1 per minute")  # 분당 1회 요청으로 제한
 def generate_questions():
     type_selected = request.form.get('type')
     job_position = request.form.get('job_position')
 
+    # Validate string lengths
+    if len(job_position) == 0:
+        return jsonify({"error": "값을 입력해주세요."}), 400
+    elif len(job_position) > 100:
+        return jsonify({"error": "직무란은 100자를 초과할 수 없습니다."}), 400
+
     if type_selected == "personal_statement_form":
         introduction_article = request.form.get('introduction_article')
         personal_statement = request.form.get('personal_statement')
+        if len(introduction_article) == 0 or len(personal_statement) == 0:
+            return jsonify({"error": "값을 입력해주세요."}), 400
+        elif len(introduction_article) > 300:
+            return jsonify({"error": "자기소개서 항목란은 300자를 초과할 수 없습니다."}), 400
+        elif len(personal_statement) > 2000:
+            return jsonify({"error": "자기소개서 내용란은 2000자를 초과할 수 없습니다."}), 400
 
         prompt_content = f"""
         You're a hiring manager looking for a new {job_position} to join your team. Based on the following information, generate 7 interview questions and tips for each question. Please provide your response in JSON format with the following schema:
@@ -61,6 +74,12 @@ def generate_questions():
     elif type_selected == "project":
         project_title = request.form.get('project_title')
         project_description = request.form.get('project_description')
+        if len(project_title) == 0 or len(project_description) == 0:
+            return jsonify({"error": "값을 입력해주세요."}), 400
+        elif len(project_title) > 300:
+            return jsonify({"error": "프로젝트 제목란은 300자를 초과할 수 없습니다."}), 400
+        elif len(project_description) > 2000:
+            return jsonify({"error": "프로젝트 설명란은 2000자를 초과할 수 없습니다."}), 400
 
         prompt_content = f"""
         You're a hiring manager looking for a new {job_position} to join your team. Based on the information about this project, generate 7 interview questions and tips for each question. Please provide your response in JSON format with the following schema:
@@ -118,6 +137,11 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
     #app.run(host='0.0.0.0', port=80, debug=False)
 
-#TODO: question api 요청 내용 튜닝. ex) 면접관의 입장에서, 자기소개서의 내용으로 질문
-#TODO: 요청 한번 하면 Frontend에서 1분 대기시간 주기, Backend도.
+#TODO: question api 요청 내용 튜닝. ex) 면접관의 입장에서, 자기소개서의 내용으로 질문: OK
+#TODO: 요청 한번 하면 Frontend에서 1분 대기시간 주기, Backend도.: OK
 #TODO: 문자열 길이 체크
+#TODO: Frontend collaspe bug modify: OK
+#TODO: 카카오톡으로 내보내기 기능 추가
+#      텍스트 복사하기 and 사진으로 다운받기 기능?
+#TODO: Test Data Set
+#TODO: 에러 핸들링 추가
