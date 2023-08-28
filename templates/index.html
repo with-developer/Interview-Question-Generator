@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="{{ url_for('static', filename='logo/favicon.png') }}">
+
+  <title>당면행</title>
+
+  <!-- Bootstrap 5.0 CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/css/bootstrap.min.css"
+    integrity="sha512-NZ19NrT58XPK5sXqXnnvtf9T5kLXSzGQlVZL9taZWeTBtXoN3xIfTdxbkQh6QSoJfJgpojRqMfhyqBAAEeiXcA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/js/bootstrap.min.js"
+    integrity="sha512-Pv/SmxhkTB6tWGQWDa6gHgJpfBdIpyUy59QkbshS1948GRmj6WgZz18PaDMOqaEyKLRAvgil7sx/WACNGE4Txw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black Han Sans&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbit&display=swap">
+
+
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='cover.css') }}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+  <div class="container custom-container">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">당신의 면접에 행운이</h3>
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" href="#">Home</a>
+          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="#">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <div class="row" style="background: #f5f5f5; margin-right:0; margin-left:0;">
+      <!-- col-* 클래스를 사용하여 화면의 크기에 따라 너비를 조절 -->
+      <div class="col-12 col-md-10 col-lg-8 mx-auto">
+
+        <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+
+
+          <main role="main" class="inner cover shadow p-3 mb-5 bg-white rounded">
+
+
+            <form id="personal-statement-form">
+              <div class="custom-form-group" style="margin-top: 0; margin-bottom:0;">
+                <label for="job_position" class="custom-label">지원하시려는 직무를 입력해주세요.</label>
+                <input type="text" id="job_position" class="form-control custom-form-control"
+                  placeholder="예: 소프트웨어 엔지니어, 마케팅 전문가...">
+              </div>
+              <div class="custom-form-group custom-form-control" style="margin-top:0;">
+                <label for="type-select" class="custom-label">유형 선택</label>
+                <select id="type-select" class="form-select" style="font-size: small;font-weight: bold;">
+                  <option value="personal_statement_form" selected>자기소개서</option>
+                  <option value="project">프로젝트</option>
+                </select>
+              </div>
+              <div id="personal-statement-section">
+                <div class="custom-form-group" style="margin-top: 0;">
+                  <label for="introduction-article" class="custom-label">자기소개서 항목을 입력해주세요.</label>
+                  <input type="text" id="introduction-article" class="form-control custom-form-control"
+                    placeholder="예: 본 직군으로 지원을 결정하시게 된 계기를 작성해 주세요.">
+                </div>
+                <div class="custom-form-group">
+                  <label for="personal_statement" class="custom-label">자기소개서를 입력해주세요.</label><span
+                    class="custom-label custom-span">(최대 2,000자)</span>
+                    <textarea id="personal_statement" class="form-control custom-form-control" rows="8" style="font-size: 0.7rem;" oninput="updateCounter(this, 2000, 'personal_counter')"></textarea>
+                    <div id="personal_counter" style="text-align: right;"></div>
+                </div>
+
+              </div>
+              <div id="project-section">
+                <div class="custom-form-group">
+                  <label for="project_title" class="custom-label">프로젝트 제목을 입력해주세요.</label>
+                  <input type="text" id="project_title" class="form-control custom-form-control"
+                    placeholder="프로젝트 제목을 입력해주세요.">
+                </div>
+                <div class="custom-form-group">
+                  <label for="project_description" class="custom-label">프로젝트 설명을 입력해주세요.</label><span
+                  class="custom-label custom-span">(최대 2,000자)</span>
+                  <textarea id="project_description" class="form-control custom-form-control" rows="8" placeholder="프로젝트에 대한 설명을 입력해주세요." oninput="updateCounter(this, 2000, 'description_counter')"></textarea>
+                  <div id="description_counter" style="text-align: right;"></div>
+                </div>
+              </div>
+            
+            <button type="submit" class="btn btn-primary">질문 생성</button>
+          </form>
+            <div id="questions" class="mt-4 accordion" id="questionsAccordion"></div>
+          </main>
+
+          <footer class="mastfoot mt-auto">
+            <div class="inner">
+              <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a
+                  href="https://twitter.com/mdo">@mdo</a>.</p>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+    integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="{{ url_for('static', filename='assets/js/vendor/popper.min.js') }}"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+<script>
+  function updateCounter(element, limit, counterId) {
+    const counter = document.getElementById(counterId);
+    const currentLength = element.value.length;
+
+    if (currentLength > limit) {
+      element.value = element.value.substring(0, limit);
+    }
+
+    counter.textContent = `${element.value.length} / ${limit}`;
+  }
+  $('#personal-statement-form').submit(function (e) {
+    e.preventDefault();
+  
+    // 공통으로 사용되는 job_position 값
+    let job_position = $('#job_position').val();
+  
+    // 현재 선택된 select option
+    let selectedValue = $("#type-select").val();
+  
+    // 데이터 초기화
+    let dataToSend = {
+      job_position: job_position,
+      type: selectedValue
+    };
+  
+    // 자기소개서가 선택되어 있는 경우
+    if (selectedValue === "personal_statement_form") {
+      dataToSend.introduction_article = $('#introduction-article').val();
+      dataToSend.personal_statement = $('#personal_statement').val();
+    } 
+    // 프로젝트가 선택되어 있는 경우
+    else if (selectedValue === "project") {
+      dataToSend.project_title = $('#project_title').val();
+      dataToSend.project_description = $('#project_description').val();
+    }
+  
+    // 백엔드로 데이터 전송
+    $.post('/generate_questions', dataToSend, function (data) {
+      // "생성된 질문" 제목 추가
+      let questionsHtml = '<h3>생성된 질문</h3>';
+      
+      data.questions.forEach(function(q, index) {
+        questionsHtml += `
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading${index}">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse${index}" style="font-size: medium;">
+                ${index + 1}. ${q.question}  <!-- 질문 앞에 번호 추가 -->
+              </button>
+            </h2>
+            <div id="collapse${index}" class="accordion-collapse collapse" data-bs-parent="#questionsAccordion">
+              <div class="card-body" style="font-size: small;text-align: initial;">
+                <p>${q.tip}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      $('#questions').html(questionsHtml);
+    });
+  });
+
+  $(document).ready(function () {
+    // 초기 상태 설정 (자기소개서 입력칸이 기본으로 보이도록)
+    $("#project-section").hide();
+
+    // select 태그의 변경을 감지
+    $("#type-select").change(function () {
+      var selectedValue = $(this).val();
+      if (selectedValue === "personal_statement_form") {
+        $("#personal-statement-section").show();
+        $("#project-section").hide();
+      } else if (selectedValue === "project") {
+        $("#personal-statement-section").hide();
+        $("#project-section").show();
+      }
+    });
+  });
+</script>
+
+
+
+</body>
+
+</html>
