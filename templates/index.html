@@ -23,91 +23,6 @@
 
   <!-- Custom styles for this template -->
   <link href="{{ url_for('static', filename='cover.css') }}" rel="stylesheet">
-  <style>
-    
-footer{
-  position: unset;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #1269D8;
-  height: auto;
-  width: 100vw;
-
-  padding-top: 10px;
-  color: #fff;
-}
-.footer-content{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-}
-.footer-content h3{
-  font-size: 0.7rem;
-  font-weight: 500;
-  margin-top:0.5rem;
-  margin-bottom: 0;
-  text-transform: capitalize;
-}
-.footer-content p{
-  max-width: 500px;
-  margin: 0 auto;
-  line-height: 28px;
-  font-size: 0.5rem;
-  color: #cacdd2;
-}
-.socials{
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem 0 3rem 0;
-}
-.socials li{
-  margin: 0 10px;
-}
-.socials a{
-  text-decoration: none;
-  color: #fff;
-  border: 1.1px solid white;
-  padding: 5px;
-
-  border-radius: 50%;
-
-}
-.socials a i{
-  font-size: 1.1rem;
-  width: 20px;
-
-
-  transition: color .4s ease;
-
-}
-.socials a:hover i{
-  color: aqua;
-}
-
-.footer-bottom{
-  background: #1269D8;
-  width: 100vw;
-  padding: 0rem 10px 10px 1rem;
-  text-align: center;
-  padding-bottom: 0.5rem;
-}
-.footer-bottom p{
-  font-size: 0.5rem;
-  word-spacing: 2px;
-  text-transform: capitalize;
-  margin-bottom:0.5rem;
-}
-.footer-bottom p a{
-color:#000000;
-font-size: 0.5rem;
-text-decoration: none;
-}
-  </style>
 </head>
 
 <body class="text-center">
@@ -142,11 +57,11 @@ AI기반 면접 질문 생성 서비스
               <div class="custom-form-group" style="margin-top: 0; margin-bottom:0;">
                 <label for="job_position" class="custom-label">지원하시려는 직무를 입력해주세요.</label>
                 <input type="text" id="job_position" class="form-control custom-form-control"
-                  placeholder="예: 소프트웨어 엔지니어, 마케팅 전문가...">
+                  placeholder="예: 소프트웨어 엔지니어, 마케팅 전문가..." required>
               </div>
               <div class="custom-form-group custom-form-control" style="margin-top:0;">
                 <label for="type-select" class="custom-label">유형 선택</label>
-                <select id="type-select" class="form-select" style="font-size: small;">
+                <select id="type-select" class="form-select" style="font-size: smaller;">
                   <option value="personal_statement_form" selected>자기소개서</option>
                   <option value="project">프로젝트</option>
                 </select>
@@ -155,31 +70,37 @@ AI기반 면접 질문 생성 서비스
                 <div class="custom-form-group" style="margin-top: 0;">
                   <label for="introduction-article" class="custom-label">자기소개서 항목을 입력해주세요.</label>
                   <input type="text" id="introduction-article" class="form-control custom-form-control"
-                    placeholder="예: 본 직군으로 지원을 결정하시게 된 계기를 작성해 주세요.">
+                    placeholder="예: 본 직군으로 지원을 결정하시게 된 계기를 작성해 주세요." required>
                 </div>
                 <div class="custom-form-group">
                   <label for="personal_statement" class="custom-label">자기소개서를 입력해주세요.</label><span
                     class="custom-label custom-span">(최대 2,000자)</span>
-                    <textarea id="personal_statement" class="form-control custom-form-control" rows="12" style="font-size: 0.7rem;" oninput="updateCounter(this, 2000, 'personal_counter')"></textarea>
+                    <textarea id="personal_statement" class="form-control custom-form-control" rows="12" style="font-size: 0.7rem;" placeholder="자기소개서 내용을 입력해주세요." required oninput="updateCounter(this, 2000, 'personal_counter')" required></textarea>
                     <div id="personal_counter" style="text-align: right; font-size:0.7rem;"></div>
                 </div>
 
               </div>
-              <div id="project-section">
+              <div id="project-section" style="display:none;">
                 <div class="custom-form-group">
                   <label for="project_title" class="custom-label">프로젝트 제목을 입력해주세요.</label>
                   <input type="text" id="project_title" class="form-control custom-form-control"
-                    placeholder="프로젝트 제목을 입력해주세요.">
+                    placeholder="예: AI기반 면접 질문 생성 서비스 개발 프로젝트" required>
                 </div>
                 <div class="custom-form-group">
                   <label for="project_description" class="custom-label">프로젝트 설명을 입력해주세요.</label><span
                   class="custom-label custom-span">(최대 2,000자)</span>
-                  <textarea id="project_description" class="form-control custom-form-control" rows="12" placeholder="프로젝트에 대한 설명을 입력해주세요." oninput="updateCounter(this, 2000, 'description_counter')"></textarea>
+                  <textarea id="project_description" class="form-control custom-form-control" rows="12" style="font-size: 0.7rem;" placeholder="프로젝트에 대한 설명을 입력해주세요." oninput="updateCounter(this, 2000, 'description_counter')" required></textarea>
                   <div id="description_counter" style="text-align: right;"></div>
                 </div>
               </div>
             
-            <button type="submit" class="btn btn-primary">질문 생성</button>
+              <button type="submit" class="btn btn-primary" id="generate-button">질문 생성</button>
+              <div id="loading-message" style="display: none;">
+                <span class="custom-form-control">질문을 생성 중입니다, 잠시만 기다려주세요</span><br>
+                <div class="spinner-border text-primary" role="status" style="width:1rem; height:1rem;">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
           </form>
           <div id="questions" class="mt-4 accordion"></div>
           </main>
@@ -217,11 +138,31 @@ AI기반 면접 질문 생성 서비스
 
     counter.textContent = `${element.value.length} / ${limit}`;
   }
+
+  let timerInterval; // 타이머를 저장할 변수
   $('#personal-statement-form').submit(function (e) {
     e.preventDefault();
+
+    $("#generate-button").prop("disabled", true);
+    $("#loading-message").show();
+
+    let timeLeft = 60;
+    timerInterval = setInterval(function() {
+      $("#generate-button").text(`다음 질문 생성 가능: ${timeLeft}s`);
+      timeLeft -= 1;
+  
+      if (timeLeft < 0) {
+        clearInterval(timerInterval);
+        $("#generate-button").text("질문 생성");
+        $("#generate-button").prop("disabled", false);
+      }
+    }, 1000);
   
     // 공통으로 사용되는 job_position 값
     let job_position = $('#job_position').val();
+    let isValid = true;
+    let missingFields = [];
+
   
     // 현재 선택된 select option
     let selectedValue = $("#type-select").val();
@@ -231,6 +172,43 @@ AI기반 면접 질문 생성 서비스
       job_position: job_position,
       type: selectedValue
     };
+    // 공통 필드 검증
+    if ($('#job_position').val() === '') {
+      isValid = false;
+      missingFields.push('지원하려는 직무');
+    }
+
+    // 자기소개서가 선택되어 있는 경우
+    if (selectedValue === "personal_statement_form") {
+      if ($('#introduction-article').val() === '') {
+        isValid = false;
+        missingFields.push('자기소개서 항목');
+      }
+      if ($('#personal_statement').val() === '') {
+        isValid = false;
+        missingFields.push('자기소개서');
+      }
+    } 
+    // 프로젝트가 선택되어 있는 경우
+    else if (selectedValue === "project") {
+      if ($('#project_title').val() === '') {
+        isValid = false;
+        missingFields.push('프로젝트 제목');
+      }
+      if ($('#project_description').val() === '') {
+        isValid = false;
+        missingFields.push('프로젝트 설명');
+      }
+    }
+
+    if (!isValid) {
+      $("#loading-message").hide();
+      clearInterval(timerInterval); // 타이머를 초기화
+      $("#generate-button").text("질문 생성");
+      $("#generate-button").prop("disabled", false); // 버튼을 다시 활성화
+      alert('다음 필드가 누락되었습니다: ' + missingFields.join(', '));
+      return;
+    }
   
     // 자기소개서가 선택되어 있는 경우
     if (selectedValue === "personal_statement_form") {
@@ -244,7 +222,8 @@ AI기반 면접 질문 생성 서비스
     }
   
     // 백엔드로 데이터 전송
-    $.post('/generate_questions', dataToSend, function (data) {
+    $.post('/generate_questions', dataToSend)
+  .done(function (data) {
       // "생성된 질문" 제목 추가
       let questionsHtml = '<h3>생성된 질문</h3>';
     
@@ -264,26 +243,59 @@ AI기반 면접 질문 생성 서비스
         </div>
       `;
     });
+    $("#loading-message").hide();
     $('#questions').html(questionsHtml);
+  })
+  .fail(function (jqXHR) {
+    // 실패 시 에러 메시지 출력
+    let errorMsg = "알 수 없는 오류가 발생했습니다.";
+    if (jqXHR.status === 429) {
+      errorMsg = "1분에 1번의 요청만 가능합니다.";
+    } else if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+      errorMsg = jqXHR.responseJSON.error;
+    }
+    alert(errorMsg);
+    $("#loading-message").hide();
+    clearInterval(timerInterval); // 타이머를 초기화
+    $("#generate-button").text("질문 생성");
+    $("#generate-button").prop("disabled", false); // 버튼을 다시 활성화
   });
 });
 
-  $(document).ready(function () {
-    // 초기 상태 설정 (자기소개서 입력칸이 기본으로 보이도록)
-    $("#project-section").hide();
+$(document).ready(function () {
+  // 초기 상태 설정 (자기소개서 입력칸이 기본으로 보이도록)
+  $("#project-section").hide();
+  setRequiredFields('personal_statement_form');
 
-    // select 태그의 변경을 감지
-    $("#type-select").change(function () {
-      var selectedValue = $(this).val();
-      if (selectedValue === "personal_statement_form") {
-        $("#personal-statement-section").show();
-        $("#project-section").hide();
-      } else if (selectedValue === "project") {
-        $("#personal-statement-section").hide();
-        $("#project-section").show();
-      }
-    });
+  // select 태그의 변경을 감지
+  $("#type-select").change(function () {
+    var selectedValue = $(this).val();
+    setRequiredFields(selectedValue); // required 속성 설정
+
+    if (selectedValue === "personal_statement_form") {
+      $("#personal-statement-section").show();
+      $("#project-section").hide();
+    } else if (selectedValue === "project") {
+      $("#personal-statement-section").hide();
+      $("#project-section").show();
+    }
   });
+});
+
+// required 속성을 동적으로 설정
+function setRequiredFields(selectedValue) {
+  if (selectedValue === 'personal_statement_form') {
+    $('#introduction-article').prop('required', true);
+    $('#personal_statement').prop('required', true);
+    $('#project_title').prop('required', false);
+    $('#project_description').prop('required', false);
+  } else if (selectedValue === 'project') {
+    $('#introduction-article').prop('required', false);
+    $('#personal_statement').prop('required', false);
+    $('#project_title').prop('required', true);
+    $('#project_description').prop('required', true);
+  }
+}
 </script>
 
 
