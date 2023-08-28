@@ -23,6 +23,91 @@
 
   <!-- Custom styles for this template -->
   <link href="{{ url_for('static', filename='cover.css') }}" rel="stylesheet">
+  <style>
+    
+footer{
+  position: unset;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1269D8;
+  height: auto;
+  width: 100vw;
+
+  padding-top: 10px;
+  color: #fff;
+}
+.footer-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.footer-content h3{
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin-top:0.5rem;
+  margin-bottom: 0;
+  text-transform: capitalize;
+}
+.footer-content p{
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 28px;
+  font-size: 0.5rem;
+  color: #cacdd2;
+}
+.socials{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 3rem 0;
+}
+.socials li{
+  margin: 0 10px;
+}
+.socials a{
+  text-decoration: none;
+  color: #fff;
+  border: 1.1px solid white;
+  padding: 5px;
+
+  border-radius: 50%;
+
+}
+.socials a i{
+  font-size: 1.1rem;
+  width: 20px;
+
+
+  transition: color .4s ease;
+
+}
+.socials a:hover i{
+  color: aqua;
+}
+
+.footer-bottom{
+  background: #1269D8;
+  width: 100vw;
+  padding: 0rem 10px 10px 1rem;
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+.footer-bottom p{
+  font-size: 0.5rem;
+  word-spacing: 2px;
+  text-transform: capitalize;
+  margin-bottom:0.5rem;
+}
+.footer-bottom p a{
+color:#000000;
+font-size: 0.5rem;
+text-decoration: none;
+}
+  </style>
 </head>
 
 <body class="text-center">
@@ -30,6 +115,12 @@
     <header class="masthead mb-auto">
       <div class="inner">
         <h3 class="masthead-brand">당신의 면접에 행운이</h3>
+        <span style="
+    font-size: 1rem;
+    font-family: sans-serif;
+">
+AI기반 면접 질문 생성 서비스
+</span>
         <nav class="nav nav-masthead justify-content-center">
           <a class="nav-link active" href="#">Home</a>
           <a class="nav-link" href="#">Features</a>
@@ -44,7 +135,7 @@
         <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
 
-          <main role="main" class="inner cover shadow p-3 mb-5 bg-white rounded">
+          <main role="main" class="inner cover shadow p-3 mb-4 bg-white rounded">
 
 
             <form id="personal-statement-form">
@@ -55,7 +146,7 @@
               </div>
               <div class="custom-form-group custom-form-control" style="margin-top:0;">
                 <label for="type-select" class="custom-label">유형 선택</label>
-                <select id="type-select" class="form-select" style="font-size: small;font-weight: bold;">
+                <select id="type-select" class="form-select" style="font-size: small;">
                   <option value="personal_statement_form" selected>자기소개서</option>
                   <option value="project">프로젝트</option>
                 </select>
@@ -69,8 +160,8 @@
                 <div class="custom-form-group">
                   <label for="personal_statement" class="custom-label">자기소개서를 입력해주세요.</label><span
                     class="custom-label custom-span">(최대 2,000자)</span>
-                    <textarea id="personal_statement" class="form-control custom-form-control" rows="8" style="font-size: 0.7rem;" oninput="updateCounter(this, 2000, 'personal_counter')"></textarea>
-                    <div id="personal_counter" style="text-align: right;"></div>
+                    <textarea id="personal_statement" class="form-control custom-form-control" rows="12" style="font-size: 0.7rem;" oninput="updateCounter(this, 2000, 'personal_counter')"></textarea>
+                    <div id="personal_counter" style="text-align: right; font-size:0.7rem;"></div>
                 </div>
 
               </div>
@@ -83,7 +174,7 @@
                 <div class="custom-form-group">
                   <label for="project_description" class="custom-label">프로젝트 설명을 입력해주세요.</label><span
                   class="custom-label custom-span">(최대 2,000자)</span>
-                  <textarea id="project_description" class="form-control custom-form-control" rows="8" placeholder="프로젝트에 대한 설명을 입력해주세요." oninput="updateCounter(this, 2000, 'description_counter')"></textarea>
+                  <textarea id="project_description" class="form-control custom-form-control" rows="12" placeholder="프로젝트에 대한 설명을 입력해주세요." oninput="updateCounter(this, 2000, 'description_counter')"></textarea>
                   <div id="description_counter" style="text-align: right;"></div>
                 </div>
               </div>
@@ -93,16 +184,23 @@
             <div id="questions" class="mt-4 accordion" id="questionsAccordion"></div>
           </main>
 
-          <footer class="mastfoot mt-auto">
-            <div class="inner">
-              <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a
-                  href="https://twitter.com/mdo">@mdo</a>.</p>
-            </div>
-          </footer>
+          
         </div>
       </div>
     </div>
+    <footer>
+      <div class="footer-content">
+          <h3>Developed by Lee Junhyung</h3>
+          <p>합격을 응원합니다.</p>
+      </div>
+      <div class="footer-bottom">
+          <p style="margin:0;">copyright &copy; <a href="https://github.com/with-developer/Interview-Question-Generator/blob/main/LICENSE">이준형 (MIT License)</a>  </p>
+      </div>
+  
+  </footer>
   </div>
+
+  
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"
@@ -158,12 +256,12 @@
         questionsHtml += `
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading${index}">
-              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse${index}" style="font-size: medium;">
+              <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse${index}">
                 ${index + 1}. ${q.question}  <!-- 질문 앞에 번호 추가 -->
               </button>
             </h2>
             <div id="collapse${index}" class="accordion-collapse collapse" data-bs-parent="#questionsAccordion">
-              <div class="card-body" style="font-size: small;text-align: initial;">
+              <div class="card-body" style="text-align: initial;">
                 <p>${q.tip}</p>
               </div>
             </div>

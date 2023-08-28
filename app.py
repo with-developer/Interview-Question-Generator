@@ -43,11 +43,12 @@ def generate_questions():
         - Number of Questions: 7
         - Target Audience: Applicant
         - Objective of Questions: To assess the applicant's qualifications and suitability for the role
+        - Note: The 'tip' should guide the applicant on how best to answer the question.
         - Language Used: Korean
 
         Resume Information:
-        - Introduce: {introduction_article}
-        - Experience: {personal_statement}
+        - cover letter category: {introduction_article}
+        - cover letter: {personal_statement}
 
         Please respond in Korean.
         """
@@ -77,6 +78,7 @@ def generate_questions():
         - Number of Questions: 7
         - Target Audience: Applicant
         - Objective of Questions: To assess the applicant's qualifications and suitability for the role
+        - Note: The 'tip' should guide the applicant on how best to answer the question.
         - Language Used: Korean
 
         Project Information:
@@ -97,8 +99,7 @@ def generate_questions():
     response = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=messages,
-        temperature=0.5,
-        max_tokens=1000
+        temperature=0.5
     )
 
     content = response['choices'][0]['message']['content']
@@ -115,3 +116,8 @@ def generate_questions():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
+    #app.run(host='0.0.0.0', port=80, debug=False)
+
+#TODO: question api 요청 내용 튜닝. ex) 면접관의 입장에서, 자기소개서의 내용으로 질문
+#TODO: 요청 한번 하면 Frontend에서 1분 대기시간 주기, Backend도.
+#TODO: 문자열 길이 체크
