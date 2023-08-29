@@ -41,7 +41,7 @@ def generate_questions():
             return jsonify({"error": "자기소개서 내용란은 2000자를 초과할 수 없습니다."}), 400
 
         prompt_content = f"""
-        You're a hiring manager looking for a new {job_position} to join your team. Based on the following information, generate 7 interview questions and tips for each question. Please provide your response in JSON format with the following schema:
+        You're a hiring manager looking for a new {job_position} to join your team. Based on the following cover letter, generate 7 interview questions and tips for each question. Please provide your response in JSON format with the following schema:
         {{
             "questions": [
                 {{"question": "...", "tip": "..."}},
@@ -82,7 +82,7 @@ def generate_questions():
             return jsonify({"error": "프로젝트 설명란은 2000자를 초과할 수 없습니다."}), 400
 
         prompt_content = f"""
-        You're a hiring manager looking for a new {job_position} to join your team. Based on the information about this project, generate 7 interview questions and tips for each question. Please provide your response in JSON format with the following schema:
+        You're a hiring manager looking for a new {job_position} to join your team. Based on the cover letter about this project, generate 7 interview questions and tips for each question. Please provide your response in JSON format with the following schema:
         {{
             "questions": [
                 {{"question": "...", "tip": "..."}},
@@ -134,6 +134,7 @@ def generate_questions():
     return jsonify(parsed_content)
 
 if __name__ == '__main__':
+    #pass
     app.run(host='0.0.0.0', debug=True)
     #app.run(host='0.0.0.0', port=80, debug=False)
 
@@ -146,4 +147,3 @@ if __name__ == '__main__':
 #      텍스트 복사 OK
 #TODO: Test Data Set
 #TODO: 에러 핸들링 추가
-#TODO: HTTPS 설정
