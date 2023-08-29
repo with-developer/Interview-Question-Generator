@@ -139,9 +139,10 @@ if __name__ == '__main__':
 
 #TODO: question api 요청 내용 튜닝. ex) 면접관의 입장에서, 자기소개서의 내용으로 질문: OK
 #TODO: 요청 한번 하면 Frontend에서 1분 대기시간 주기, Backend도.: OK
-#TODO: 문자열 길이 체크
+#TODO: 문자열 길이 체크 OK
 #TODO: Frontend collaspe bug modify: OK
 #TODO: 카카오톡으로 내보내기 기능 추가
 #      텍스트 복사하기 and 사진으로 다운받기 기능?
+#      텍스트 복사 OK
 #TODO: Test Data Set
 #TODO: 에러 핸들링 추가

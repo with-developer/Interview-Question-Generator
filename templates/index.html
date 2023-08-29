@@ -20,6 +20,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black Han Sans&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbit&display=swap">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
   <!-- Custom styles for this template -->
   <link href="{{ url_for('static', filename='cover.css') }}" rel="stylesheet">
@@ -94,7 +97,7 @@ AI기반 면접 질문 생성 서비스
                 </div>
               </div>
             
-              <button type="submit" class="btn btn-primary" id="generate-button">질문 생성</button>
+              <button type="submit" class="btn-primary" id="generate-button" style="padding: 5px 0px;width: -webkit-fill-available;margin: 0px 1rem;">질문 생성</button>
               <div id="loading-message" style="display: none;">
                 <span class="custom-form-control">질문을 생성 중입니다, 잠시만 기다려주세요</span><br>
                 <div class="spinner-border text-primary" role="status" style="width:1rem; height:1rem;">
@@ -103,6 +106,16 @@ AI기반 면접 질문 생성 서비스
               </div>
           </form>
           <div id="questions" class="mt-4 accordion"></div>
+
+          
+
+          <div class="justify-content-between mt-3" id="save-button-div" style="display:none !important; float: left;">
+            <button type="button" class="btn-info custom-form-group" id="copy-to-clipboard" style="margin: 10px 5px 10px 5px;padding: 5px;">결과 복사</button>
+            <button type="button" class="btn-info custom-form-group" id="save-question-image" style="margin: 10px 5px 10px 5px;padding: 5px;">결과 이미지 저장</button>
+            <button type="button" class="btn-info custom-form-group" id="save-question-tip-image" style="margin: 10px 5px 10px 5px;padding: 5px;">질문+팁 이미지 저장</button>
+          </div>
+
+          
           </main>
 
           
@@ -237,7 +250,7 @@ AI기반 면접 질문 생성 서비스
           </h2>
           <div id="collapse${index}" class="accordion-collapse collapse"> <!-- data-bs-parent 속성 제거 -->
             <div class="card-body" style="text-align: initial;">
-              <p>${q.tip}</p>
+              <p>답변 팁: ${q.tip}</p>
             </div>
           </div>
         </div>
@@ -245,6 +258,7 @@ AI기반 면접 질문 생성 서비스
     });
     $("#loading-message").hide();
     $('#questions').html(questionsHtml);
+    $('#save-button-div').show();
   })
   .fail(function (jqXHR) {
     // 실패 시 에러 메시지 출력
@@ -296,6 +310,33 @@ function setRequiredFields(selectedValue) {
     $('#project_description').prop('required', true);
   }
 }
+
+// Toastr 설정
+toastr.options = {
+  "positionClass": "toast-bottom-center",
+  // 추가적으로 원하는 설정을 여기에 넣을 수 있습니다.
+};
+
+// 클립보드 복사 버튼 이벤트 핸들러
+$('#copy-to-clipboard').click(function() {
+  let copyText = '';
+  $('#questions .accordion-item').each(function(index) {
+    let question = $(this).find('.accordion-button').text().trim();
+    let tip = $(this).find('.card-body p').text().trim();
+    
+    copyText += `${index + 1}번 질문: ${question}\n`;
+    copyText += `답변 팁: ${tip}\n\n`;
+  });
+  alert("복사 전 alert")
+  toastr.success('복사 전 toastr');
+  // 클립보드에 복사
+  navigator.clipboard.writeText(copyText).then(function() {
+    // Toastr 메시지 띄우기
+    toastr.success('결과가 클립보드에 복사되었습니다.');
+  }).catch(function(err) {
+    toastr.error('클립보드 복사에 실패했습니다.');
+  });
+});
 </script>
 
 
