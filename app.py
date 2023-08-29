@@ -146,3 +146,4 @@ if __name__ == '__main__':
 #      텍스트 복사 OK
 #TODO: Test Data Set
 #TODO: 에러 핸들링 추가
+#TODO: HTTPS 설정
