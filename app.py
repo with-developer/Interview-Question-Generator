@@ -165,6 +165,10 @@ def sitemap():
 def robots():
     return render_template('robots.txt')
 
+@app.route('/Ads.txt')
+def Ads():
+    return render_template('Ads.txt')
+
 
 if __name__ == '__main__':
     #pass
