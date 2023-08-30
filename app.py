@@ -133,6 +133,17 @@ def generate_questions():
 
     return jsonify(parsed_content)
 
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return render_template('sitemap.xml')
+
+
+@app.route('/robots.txt')
+def robots():
+    return render_template('robots.txt')
+
+
 if __name__ == '__main__':
     #pass
     app.run(host='0.0.0.0', debug=True)
@@ -141,5 +152,5 @@ if __name__ == '__main__':
 
 #TODO: 텍스트 복사: OK
 #TODO: 이미지 저장: OK
-#TODO: Test Data Set:
+#TODO: Test Data Set: OK
 #TODO: 에러 핸들링 추가
