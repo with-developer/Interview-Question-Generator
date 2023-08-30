@@ -3,15 +3,26 @@ from flask_limiter import Limiter, util
 import openai
 import os
 import json
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+error_logger = logging.getLogger('error')
+error_logger.addHandler(logging.FileHandler('error.log'))
+success_logger = logging.getLogger('success')
+success_logger.addHandler(logging.FileHandler('success.log'))
 
 app = Flask(__name__)
 
 # Limiter 객체 한 번만 생성
 limiter = Limiter(key_func=util.get_remote_address, app=app)
 
-
 API_KEY = os.getenv("OPENAI_API_KEY")
 openai.api_key = API_KEY
+
+# Check if API Key is available
+# if API_KEY is None:
+#     raise EnvironmentError("Missing OPENAI_API_KEY environment variable")
 
 @app.route('/')
 def index():
@@ -23,6 +34,9 @@ def index():
 def generate_questions():
     type_selected = request.form.get('type')
     job_position = request.form.get('job_position')
+
+    if not type_selected or not job_position:
+            return jsonify({"error": "값을 입력해주세요."}), 400
 
     # Validate string lengths
     if len(job_position) == 0:
@@ -115,22 +129,30 @@ def generate_questions():
     else:
         return jsonify({"error": "Invalid type selected"}), 400
 
-    response = openai.ChatCompletion.create(
-        model='gpt-3.5-turbo',
-        messages=messages,
-        temperature=0.5
-    )
+    try:
+        response = openai.ChatCompletion.create(
+            model='gpt-3.5-turbo',
+            messages=messages,
+            temperature=0.5
+        )
+    except Exception as e:
+        error_message = f"OpenAI API error: {str(e)}"
+        error_logger.error(error_message)
+        return jsonify({"error": f"OpenAI API error: {str(e)}"}), 500
 
-    content = response['choices'][0]['message']['content']
+    content = response.get('choices', [{}])[0].get('message', {}).get('content', "")
 
     # content 출력하여 확인
     print("Generated content:", content)
 
     try:
         parsed_content = json.loads(content)
-    except json.JSONDecodeError as e:
-        return jsonify({"error": f"JSON decoding error: {e}", "content": content}), 400
+    except Exception as e:
+        error_message = f"JSON parsing error: {str(e)}"
+        error_logger.error(error_message)
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
 
+    success_logger.info(f"Successfully generated questions for type {type_selected}")
     return jsonify(parsed_content)
 
 
