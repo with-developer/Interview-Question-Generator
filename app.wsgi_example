@@ -1,0 +1,13 @@
+import sys
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+dotenv_path = '/Path/to/file/.env'
+load_dotenv(dotenv_path=dotenv_path)
+
+sys.path.insert(0, '/Path/to/Interview-Question-Generator/source')
+
+from app import app as application
+
+# Configuration this file and rename "app.wsgi"
