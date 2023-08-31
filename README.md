@@ -48,6 +48,7 @@
 -  Flatform: Google Cloude Flatform
 -  Server: Ubuntu:20.04
 -  Sub-System: Docker
+-  Middleware: Apache2
 -  Python Version: 3.10.13
 
 
