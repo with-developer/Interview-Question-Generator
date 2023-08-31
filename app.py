@@ -8,9 +8,9 @@ import logging
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 error_logger = logging.getLogger('error')
-error_logger.addHandler(logging.FileHandler('error.log'))
+error_logger.addHandler(logging.FileHandler('/var/log/flask_error.log'))
 success_logger = logging.getLogger('success')
-success_logger.addHandler(logging.FileHandler('success.log'))
+success_logger.addHandler(logging.FileHandler('/var/log/flask_success.log'))
 
 app = Flask(__name__)
 
