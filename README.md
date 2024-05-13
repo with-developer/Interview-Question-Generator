@@ -15,10 +15,6 @@
 
   <h3 align="center">당면행은 "당신의 면접에 행운이"의 줄임말로,<br> 직무, 자기소개서 항목, 자기소개서 내용을 분석하여 면접 질문 및 질문 의도를 생성합니다.</h3>
 
-  <p align="center">
-    <a href="https://askrator.com/"><strong>면접 질문 생성하러 가기 »</strong></a>
-    <br />
-  </p>
 </div>
 
 ---
